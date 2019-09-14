@@ -26,17 +26,17 @@ func Map(name string, lastName string, city string, country string, password str
 			city:         city,
 			country:      country,
 			emailAddress: email,
-			createdAt: time.Now(),
+			createdAt:    time.Now(),
 		}
 	case "user":
 		return &User{
-			uid:      genUUID(),
-			name:     name,
-			lastName: lastName,
-			username: username,
-			password: password,
-			city:     city,
-			country:  country,
+			uid:       genUUID(),
+			name:      name,
+			lastName:  lastName,
+			username:  username,
+			password:  password,
+			city:      city,
+			country:   country,
 			createdAt: time.Now(),
 		}
 
