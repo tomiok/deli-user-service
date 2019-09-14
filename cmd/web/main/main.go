@@ -1,20 +1,20 @@
 package main
 
 import (
-	"fmt"
 	"github.com/go-chi/chi"
 	"net/http"
 	"os"
 	"os/signal"
 )
 
+const port = ":8080"
+
 func main() {
-	fmt.Println("start application")
 	mux := chi.NewRouter()
 	routes(mux)
 
 	go func() {
-
+		startServer(mux, port)
 	}()
 
 	// Wait for terminate signal to shut down server
