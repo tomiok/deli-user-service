@@ -2,13 +2,12 @@ package datastore
 
 import (
 	"database/sql"
-	"github.com/labstack/gommon/log"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/labstack/gommon/log"
 )
 
 type MysqlDS struct {
 	*sql.DB
-
 }
 
 func NewMysqlDS(source string) (*MysqlDS, error) {
