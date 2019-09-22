@@ -18,26 +18,26 @@ func Map(name string, lastName string, city string, country string, password str
 	switch uType {
 	case "admin", "writer":
 		return &User{
-			uid:          genUUID(),
-			name:         name,
-			lastName:     lastName,
-			username:     createUserName(name, lastName),
-			password:     password,
-			city:         city,
-			country:      country,
-			emailAddress: email,
-			createdAt:    time.Now(),
+			Uid:          genUUID(),
+			Name:         name,
+			LastName:     lastName,
+			Username:     createUserName(name, lastName),
+			Password:     password,
+			City:         city,
+			Country:      country,
+			EmailAddress: email,
+			CreatedAt:    time.Now(),
 		}
 	case "user":
 		return &User{
-			uid:       genUUID(),
-			name:      name,
-			lastName:  lastName,
-			username:  username,
-			password:  password,
-			city:      city,
-			country:   country,
-			createdAt: time.Now(),
+			Uid:       genUUID(),
+			Name:      name,
+			LastName:  lastName,
+			Username:  username,
+			Password:  password,
+			City:      city,
+			Country:   country,
+			CreatedAt: time.Now(),
 		}
 
 	default:
@@ -51,15 +51,15 @@ func createUserName(name string, lastName string) string {
 }
 
 type User struct {
-	uid          string
-	name         string
-	lastName     string
-	username     string
-	password     string
-	city         string
-	country      string
-	emailAddress string
-	createdAt    time.Time
+	Uid          string
+	Name         string
+	LastName     string
+	Username     string
+	Password     string
+	City         string
+	Country      string
+	EmailAddress string
+	CreatedAt    time.Time
 }
 
 func genUUID() string {
