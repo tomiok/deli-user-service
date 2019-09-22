@@ -30,8 +30,13 @@ func TestMapForWriter(t *testing.T) {
 func TestEncrypt(t *testing.T) {
 	pass := "solidPassword"
 	e := encryptPass(pass)
+	ee := encryptPass(pass)
 
 	if e == pass {
+		t.Fail()
+	}
+
+	if e != ee {
 		t.Fail()
 	}
 }
