@@ -16,13 +16,23 @@ func TestMapForAdmin(t *testing.T) {
 		t.Error("should create an admin user")
 		t.Fail()
 	}
+
+	if adminUser.Password == "pass1" {
+		t.Error("Password is not encrypted!")
+		t.Fail()
+	}
 }
 
 func TestMapForWriter(t *testing.T) {
-	adminUser := Map("tomas", "lingotti", "Rosario", "Argetina", "pass1", "", "tomi@msn.com", writer)
+	writerUser := Map("tomas", "lingotti", "Rosario", "Argetina", "pass1", "", "tomi@msn.com", writer)
 
-	if adminUser.UserType.title != "writer" {
+	if writerUser.UserType.title != "writer" {
 		t.Error("should create an admin user")
+		t.Fail()
+	}
+
+	if writerUser.Password == "pass1" {
+		t.Error("password is not encrypted!")
 		t.Fail()
 	}
 }
