@@ -6,8 +6,16 @@ import (
 	"github.com/labstack/gommon/log"
 )
 
-func (m *MysqlDS) SaveUser(user *model.User) error {
-	tx, err := m.Begin()
+type SaveUser interface {
+	SaveUser(u *model.User) error
+}
+
+type SaveUserRepo struct {
+	DS *MysqlDS
+}
+
+func (u SaveUserRepo) SaveUser(user *model.User) error {
+	tx, err := u.DS.Begin()
 
 	if err != nil {
 		return errors.New("cannot start transaction")
@@ -32,5 +40,19 @@ func (m *MysqlDS) SaveUser(user *model.User) error {
 		}
 	}()
 
-	stmt.Exec(user)
+	_, err = stmt.Exec(user)
+
+	if err != nil {
+		log.Fatal("cannot execute prepared statement")
+		return err
+	}
+
+	err = tx.Commit()
+
+	if err != nil{
+		return err
+	}
+
+	return nil
+
 }

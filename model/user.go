@@ -12,7 +12,7 @@ type userType struct {
 }
 
 func Map(name string, lastName string, city string, country string, password string, username string,
-	email string, ut ut) *User {
+	email string, ut *ut) *User {
 	uType := ut.title
 
 	switch uType {
@@ -27,6 +27,7 @@ func Map(name string, lastName string, city string, country string, password str
 			Country:      country,
 			EmailAddress: email,
 			CreatedAt:    time.Now(),
+			UserType:     &userType{title: ut.title},
 		}
 	case "user":
 		return &User{
@@ -38,6 +39,7 @@ func Map(name string, lastName string, city string, country string, password str
 			City:      city,
 			Country:   country,
 			CreatedAt: time.Now(),
+			UserType:  &userType{title: ut.title},
 		}
 
 	default:
@@ -60,6 +62,7 @@ type User struct {
 	Country      string
 	EmailAddress string
 	CreatedAt    time.Time
+	UserType     *userType
 }
 
 func genUUID() string {

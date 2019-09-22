@@ -11,3 +11,7 @@ build:
 web:
 	@clear
 	@go run cmd/web/main/!(*_test).go -E dev
+
+test:
+	@clear
+	@go test -v ./...
