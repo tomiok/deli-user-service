@@ -1,6 +1,7 @@
 package model
 
 import (
+	"crypto/sha256"
 	"github.com/google/uuid"
 	"time"
 )
@@ -22,7 +23,7 @@ func Map(name string, lastName string, city string, country string, password str
 			Name:         name,
 			LastName:     lastName,
 			Username:     createUserName(name, lastName),
-			Password:     password,
+			Password:     encryptPass(password),
 			City:         city,
 			Country:      country,
 			EmailAddress: email,
@@ -47,9 +48,13 @@ func Map(name string, lastName string, city string, country string, password str
 	}
 }
 
-// TODO fix this and short the first name to one character
 func createUserName(name string, lastName string) string {
-	return name + lastName
+	return string(name[0]) + lastName
+}
+
+func encryptPass(password string) string {
+	sum := sha256.Sum256([]byte(password))
+	return string(sum[:])
 }
 
 type User struct {
