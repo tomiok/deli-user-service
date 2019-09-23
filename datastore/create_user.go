@@ -28,7 +28,9 @@ func (u SaveUserRepo) SaveUser(user *model.User) error {
 		}
 	}()
 
-	stmt, err := tx.Prepare("INSERT INTO `user` VALUES (?,?,?,?,?,?,?,?)")
+	stmt, err := tx.Prepare("INSERT INTO deli_user.`user`" +
+		" (id, name, last_name, password, username, city, country, email, created_at, user_type) " +
+		"VALUES (?,?,?,?,?,?,?,?,now(),?)")
 	if err != nil {
 		return err
 	}
@@ -40,7 +42,8 @@ func (u SaveUserRepo) SaveUser(user *model.User) error {
 		}
 	}()
 
-	_, err = stmt.Exec(user)
+	_, err = stmt.Exec("idgen", user.Name, user.LastName, user.Password, user.Username, user.City,
+		user.Country, user.EmailAddress, user.UserType)
 
 	if err != nil {
 		log.Fatal("cannot execute prepared statement")
@@ -49,7 +52,7 @@ func (u SaveUserRepo) SaveUser(user *model.User) error {
 
 	err = tx.Commit()
 
-	if err != nil{
+	if err != nil {
 		return err
 	}
 
