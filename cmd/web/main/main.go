@@ -2,6 +2,7 @@ package main
 
 import (
 	"deli/user-service/datastore"
+	"deli/user-service/engine"
 	"github.com/go-chi/chi"
 	"net/http"
 	"os"
@@ -15,10 +16,15 @@ const (
 
 func main() {
 	mux := chi.NewRouter()
-	routes(mux)
+	connection := createConnection(db_path)
 
-	createConnection(db_path)
+	saveRepo := &datastore.SaveUserRepo{
+		DS: connection,
+	}
 
+	e := engine.New(saveRepo)
+
+	routes(e, mux)
 	go func() {
 		startServer(mux, port)
 	}()

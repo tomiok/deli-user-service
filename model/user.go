@@ -3,18 +3,23 @@ package model
 import (
 	"crypto/sha256"
 	"github.com/google/uuid"
+	"math/rand"
 	"time"
 )
 
-type ut userType
+type ut UserType
 
-type userType struct {
-	title string
+type UserType struct {
+	Title string
+}
+
+func (u *User) DoMap() *User {
+	return Map(u.Name, u.LastName, u.City, u.Country, u.Password, u.Username, u.EmailAddress, (*ut)(u.UserType))
 }
 
 func Map(name string, lastName string, city string, country string, password string, username string,
 	email string, ut *ut) *User {
-	uType := ut.title
+	uType := ut.Title
 
 	switch uType {
 	case "admin", "writer":
@@ -28,7 +33,7 @@ func Map(name string, lastName string, city string, country string, password str
 			Country:      country,
 			EmailAddress: email,
 			CreatedAt:    time.Now(),
-			UserType:     &userType{title: ut.title},
+			UserType:     &UserType{Title: ut.Title},
 		}
 	case "user":
 		return &User{
@@ -40,7 +45,7 @@ func Map(name string, lastName string, city string, country string, password str
 			City:      city,
 			Country:   country,
 			CreatedAt: time.Now(),
-			UserType:  &userType{title: ut.title},
+			UserType:  &UserType{Title: ut.Title},
 		}
 
 	default:
@@ -49,6 +54,9 @@ func Map(name string, lastName string, city string, country string, password str
 }
 
 func createUserName(name string, lastName string) string {
+	if lastName == ""{
+		return string(name[0]) + string(rand.Intn(100))
+	}
 	return string(name[0]) + lastName
 }
 
@@ -67,7 +75,7 @@ type User struct {
 	Country      string
 	EmailAddress string
 	CreatedAt    time.Time
-	UserType     *userType
+	UserType     *UserType
 }
 
 func genUUID() string {
