@@ -19,5 +19,7 @@ func NewMysqlDS(source string) (*MysqlDS, error) {
 		return nil, err
 	}
 
+	log.Infof("Connection mysql %s", source)
+
 	return &MysqlDS{DB: connection}, nil
 }

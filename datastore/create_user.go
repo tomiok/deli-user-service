@@ -54,5 +54,4 @@ func (u SaveUserRepo) SaveUser(user *model.User) error {
 	}
 
 	return nil
-
 }
