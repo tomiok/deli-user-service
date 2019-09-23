@@ -5,7 +5,7 @@ import (
 )
 
 var (
-	admin = (*ut)(&userType{title: "admin"})
+	admin  = (*ut)(&userType{title: "admin"})
 	writer = (*ut)(&userType{title: "writer"})
 )
 

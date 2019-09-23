@@ -11,14 +11,13 @@ func createsAdminHandler(e engine.Spec, w http.ResponseWriter, r *http.Request) 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(200)
 	u := &model.User{
-		Name: "Tomas",
-		LastName: "Lingotti",
+		Name:         "Tomas",
+		LastName:     "Lingotti",
 		EmailAddress: "tomi@msn.com",
-		UserType: &model.UserType{Title: "admin"},
-		Password: "epicpass",
-		City: "Rosario",
-		Country: "ARG",
-
+		UserType:     &model.UserType{Title: "admin"},
+		Password:     "epicpass",
+		City:         "Rosario",
+		Country:      "ARG",
 	}
 
 	log.Info("Mapping user")

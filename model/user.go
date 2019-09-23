@@ -54,7 +54,7 @@ func Map(name string, lastName string, city string, country string, password str
 }
 
 func createUserName(name string, lastName string) string {
-	if lastName == ""{
+	if lastName == "" {
 		return string(name[0]) + string(rand.Intn(100))
 	}
 	return string(name[0]) + lastName
