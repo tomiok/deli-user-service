@@ -22,13 +22,6 @@ func (u SaveUserRepo) SaveUser(user *model.User) error {
 		return errors.New(err.Error())
 	}
 
-	defer func() {
-		err := tx.Rollback()
-		if err != nil {
-			log.Error("cannot rollback transaction")
-		}
-	}()
-
 	stmt, err := tx.Prepare("INSERT INTO deli_user.`user`" +
 		" (id, name, last_name, password, username, city, country, email, created_at, user_type) " +
 		"VALUES (?,?,?,?,?,?,?,?,now(),?)")

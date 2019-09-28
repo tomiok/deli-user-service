@@ -1,7 +1,6 @@
 package model
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -43,7 +42,6 @@ func TestEncrypt(t *testing.T) {
 	e := encryptPass(pass)
 	ee := encryptPass(pass)
 
-	fmt.Println(e)
 	if e == pass {
 		t.Fail()
 	}

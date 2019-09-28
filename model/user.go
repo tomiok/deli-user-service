@@ -69,16 +69,16 @@ func encryptPass(password string) string {
 }
 
 type User struct {
-	Uid          string
-	Name         string
-	LastName     string
-	Username     string
-	Password     string
-	City         string
-	Country      string
-	EmailAddress string
-	CreatedAt    time.Time
-	UserType     *UserType
+	Uid          string    `json:"uid"`
+	Name         string    `json:"name"`
+	LastName     string    `json:"last_name"`
+	Username     string    `json:"username"`
+	Password     string    `json:"password"`
+	City         string    `json:"city"`
+	Country      string    `json:"country"`
+	EmailAddress string    `json:"email"`
+	CreatedAt    time.Time `json:"created_at"`
+	UserType     *UserType `json:"user_type"`
 }
 
 func genUUID() string {
