@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func routes(e engine.Spec, router *chi.Mux) {
+func Routes(e engine.Spec, router *chi.Mux) {
 	router.Route("/users", func(r chi.Router) {
 		r.Get("/{userId}", getUSerByIdHandler)
 		r.Post("/admin", func(w http.ResponseWriter, r *http.Request) {

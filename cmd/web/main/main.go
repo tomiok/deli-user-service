@@ -11,7 +11,7 @@ import (
 
 const (
 	port    = ":8080"
-	db_path = "root:rootd@tcp(127.0.0.1:3306)/deli_user"
+	db_path = "root:root@tcp(localhost:3306)/deli_user"
 )
 
 func main() {
@@ -21,10 +21,10 @@ func main() {
 	saveRepo := &datastore.SaveUserRepo{
 		DS: connection,
 	}
-
+†
 	e := engine.New(saveRepo)
 
-	routes(e, mux)
+	Routes(e, mux)
 	go func() {
 		startServer(mux, port)
 	}()

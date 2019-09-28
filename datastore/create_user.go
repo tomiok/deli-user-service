@@ -3,6 +3,7 @@ package datastore
 import (
 	"deli/user-service/model"
 	"errors"
+	"fmt"
 	"github.com/labstack/gommon/log"
 )
 
@@ -15,10 +16,17 @@ type SaveUserRepo struct {
 }
 
 func (u SaveUserRepo) SaveUser(user *model.User) error {
+
+	rows, err := u.DS.Query("show tables")
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(rows)
+
 	tx, err := u.DS.Begin()
 
 	if err != nil {
-		return errors.New("cannot start transaction")
+		return errors.New(err.Error())
 	}
 
 	defer func() {
