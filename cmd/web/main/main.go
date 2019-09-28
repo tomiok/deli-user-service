@@ -4,9 +4,11 @@ import (
 	"deli/user-service/datastore"
 	"deli/user-service/engine"
 	"github.com/go-chi/chi"
+	"github.com/labstack/gommon/log"
 	"net/http"
 	"os"
 	"os/signal"
+	"runtime"
 )
 
 const (
@@ -15,13 +17,14 @@ const (
 )
 
 func main() {
+	log.Infof("CPUs: %d", runtime.NumCPU())
+
 	mux := chi.NewRouter()
 	connection := createConnection(db_path)
 
 	saveRepo := &datastore.SaveUserRepo{
 		DS: connection,
 	}
-†
 	e := engine.New(saveRepo)
 
 	Routes(e, mux)
