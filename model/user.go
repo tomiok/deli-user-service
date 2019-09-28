@@ -2,6 +2,7 @@ package model
 
 import (
 	"crypto/sha256"
+	"encoding/hex"
 	"github.com/google/uuid"
 	"math/rand"
 	"time"
@@ -61,8 +62,10 @@ func createUserName(name string, lastName string) string {
 }
 
 func encryptPass(password string) string {
-	sum := sha256.Sum256([]byte(password))
-	return string(sum[:])
+	h := sha256.New()
+	h.Write([]byte(password))
+	sha256Hash := hex.EncodeToString(h.Sum(nil))
+	return sha256Hash
 }
 
 type User struct {

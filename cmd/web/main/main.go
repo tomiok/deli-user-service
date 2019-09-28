@@ -12,15 +12,15 @@ import (
 )
 
 const (
-	port    = ":8080"
-	db_path = "root:root@tcp(localhost:3306)/deli_user"
+	port   = ":8080"
+	dbPath = "root:root@tcp(localhost:3306)/deli_user"
 )
 
 func main() {
 	log.Infof("CPUs: %d", runtime.NumCPU())
 
 	mux := chi.NewRouter()
-	connection := createConnection(db_path)
+	connection := createConnection(dbPath)
 
 	saveRepo := &datastore.SaveUserRepo{
 		DS: connection,

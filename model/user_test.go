@@ -1,18 +1,19 @@
 package model
 
 import (
+	"fmt"
 	"testing"
 )
 
 var (
-	admin  = (*ut)(&userType{title: "admin"})
-	writer = (*ut)(&userType{title: "writer"})
+	admin  = (*ut)(&UserType{Title: "admin"})
+	writer = (*ut)(&UserType{Title: "writer"})
 )
 
 func TestMapForAdmin(t *testing.T) {
 	adminUser := Map("tomas", "lingotti", "Rosario", "Argetina", "pass1", "", "tomi@msn.com", admin)
 
-	if adminUser.UserType.title != "admin" {
+	if adminUser.UserType.Title != "admin" {
 		t.Error("should create an admin user")
 		t.Fail()
 	}
@@ -26,7 +27,7 @@ func TestMapForAdmin(t *testing.T) {
 func TestMapForWriter(t *testing.T) {
 	writerUser := Map("tomas", "lingotti", "Rosario", "Argetina", "pass1", "", "tomi@msn.com", writer)
 
-	if writerUser.UserType.title != "writer" {
+	if writerUser.UserType.Title != "writer" {
 		t.Error("should create an admin user")
 		t.Fail()
 	}
@@ -42,6 +43,7 @@ func TestEncrypt(t *testing.T) {
 	e := encryptPass(pass)
 	ee := encryptPass(pass)
 
+	fmt.Println(e)
 	if e == pass {
 		t.Fail()
 	}

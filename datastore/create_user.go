@@ -3,7 +3,6 @@ package datastore
 import (
 	"deli/user-service/model"
 	"errors"
-	"fmt"
 	"github.com/labstack/gommon/log"
 )
 
@@ -16,12 +15,6 @@ type SaveUserRepo struct {
 }
 
 func (u SaveUserRepo) SaveUser(user *model.User) error {
-
-	rows, err := u.DS.Query("show tables")
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println(rows)
 
 	tx, err := u.DS.Begin()
 
@@ -51,10 +44,10 @@ func (u SaveUserRepo) SaveUser(user *model.User) error {
 	}()
 
 	_, err = stmt.Exec("idgen", user.Name, user.LastName, user.Password, user.Username, user.City,
-		user.Country, user.EmailAddress, user.UserType)
+		user.Country, user.EmailAddress, user.UserType.Title)
 
 	if err != nil {
-		log.Fatal("cannot execute prepared statement")
+		log.Errorf("cannot execute prepared statement: %s", err.Error())
 		return err
 	}
 
