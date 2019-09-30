@@ -2,9 +2,11 @@ package model
 
 import (
 	"crypto/sha256"
+	"deli/user-service/commons"
 	"encoding/hex"
-	"github.com/google/uuid"
 	"math/rand"
+	"strconv"
+	"strings"
 	"time"
 )
 
@@ -25,7 +27,7 @@ func Map(name string, lastName string, city string, country string, password str
 	switch uType {
 	case "admin", "writer":
 		return &User{
-			Uid:          genUUID(),
+			Uid:          commons.StringUUID(),
 			Name:         name,
 			LastName:     lastName,
 			Username:     createUserName(name, lastName),
@@ -38,7 +40,7 @@ func Map(name string, lastName string, city string, country string, password str
 		}
 	case "user":
 		return &User{
-			Uid:       genUUID(),
+			Uid:       commons.StringUUID(),
 			Name:      name,
 			LastName:  lastName,
 			Username:  username,
@@ -55,10 +57,15 @@ func Map(name string, lastName string, city string, country string, password str
 }
 
 func createUserName(name string, lastName string) string {
+	rand.Seed(time.Now().UnixNano())
+	var username string
 	if lastName == "" {
-		return string(name[0]) + string(rand.Intn(100))
+		username = name + strconv.Itoa(rand.Intn(999))
+	} else {
+		username = string(name[0]) + lastName
 	}
-	return string(name[0]) + lastName
+
+	return strings.ToLower(username)
 }
 
 func encryptPass(password string) string {
@@ -79,8 +86,4 @@ type User struct {
 	EmailAddress string    `json:"email"`
 	CreatedAt    time.Time `json:"created_at"`
 	UserType     *UserType `json:"user_type"`
-}
-
-func genUUID() string {
-	return uuid.New().String()
 }

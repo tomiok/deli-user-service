@@ -1,7 +1,6 @@
 package datastore
 
 import (
-	"deli/user-service/commons"
 	"deli/user-service/model"
 	"errors"
 	"github.com/labstack/gommon/log"
@@ -38,7 +37,7 @@ func (u SaveUserRepo) SaveUser(user *model.User) (string, error) {
 		}
 	}()
 
-	id := commons.StringUUID()
+	id := user.Uid
 	_, err = stmt.Exec(id, user.Name, user.LastName, user.Password, user.Username, user.City,
 		user.Country, user.EmailAddress, user.UserType.Title)
 

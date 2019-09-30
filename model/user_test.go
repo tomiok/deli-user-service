@@ -50,3 +50,20 @@ func TestEncrypt(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestUsernameCreation(t *testing.T) {
+	name := "Sherman"
+	lastName := "Lewis"
+	lastNameEmpty := ""
+
+	username1 := createUserName(name, lastNameEmpty)
+	username2 := createUserName(name, lastName)
+
+	if username1 == username2 {
+		t.Fail()
+	}
+
+	if "slewis" != username2 {
+		t.Fail()
+	}
+}
