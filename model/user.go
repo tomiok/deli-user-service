@@ -1,9 +1,7 @@
 package model
 
 import (
-	"crypto/sha256"
 	"deli/user-service/commons"
-	"encoding/hex"
 	"math/rand"
 	"strconv"
 	"strings"
@@ -31,7 +29,7 @@ func Map(name string, lastName string, city string, country string, password str
 			Name:         name,
 			LastName:     lastName,
 			Username:     createUserName(name, lastName),
-			Password:     encryptPass(password),
+			Password:     commons.EncryptPass(password),
 			City:         city,
 			Country:      country,
 			EmailAddress: email,
@@ -44,7 +42,7 @@ func Map(name string, lastName string, city string, country string, password str
 			Name:      name,
 			LastName:  lastName,
 			Username:  username,
-			Password:  password,
+			Password:  commons.EncryptPass(password),
 			City:      city,
 			Country:   country,
 			CreatedAt: time.Now(),
@@ -66,13 +64,6 @@ func createUserName(name string, lastName string) string {
 	}
 
 	return strings.ToLower(username)
-}
-
-func encryptPass(password string) string {
-	h := sha256.New()
-	h.Write([]byte(password))
-	sha256Hash := hex.EncodeToString(h.Sum(nil))
-	return sha256Hash
 }
 
 type User struct {
