@@ -1,9 +1,9 @@
 package main
 
 import (
-	"deli/user-service/engine"
-	"deli/user-service/model"
 	"encoding/json"
+	"github.com/deli/user-service/engine"
+	"github.com/deli/user-service/model"
 	"github.com/labstack/gommon/log"
 	"io/ioutil"
 	"net/http"

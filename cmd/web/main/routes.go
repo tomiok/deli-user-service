@@ -1,7 +1,7 @@
 package main
 
 import (
-	"deli/user-service/engine"
+	"github.com/deli/user-service/engine"
 	"github.com/go-chi/chi"
 	"net/http"
 )

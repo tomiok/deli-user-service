@@ -1,8 +1,8 @@
 package main
 
 import (
-	"deli/user-service/datastore"
-	"deli/user-service/engine"
+	"github.com/deli/user-service/datastore"
+	"github.com/deli/user-service/engine"
 	"github.com/go-chi/chi"
 	"github.com/labstack/gommon/log"
 	"net/http"

@@ -1,7 +1,7 @@
 package model
 
 import (
-	"deli/user-service/commons"
+	"github.com/deli/user-service/commons"
 	"testing"
 )
 

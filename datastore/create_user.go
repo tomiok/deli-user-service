@@ -1,8 +1,8 @@
 package datastore
 
 import (
-	"deli/user-service/model"
 	"errors"
+	"github.com/deli/user-service/model"
 	"github.com/labstack/gommon/log"
 )
 

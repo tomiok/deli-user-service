@@ -1,8 +1,8 @@
 package engine
 
 import (
-	"deli/user-service/datastore"
-	"deli/user-service/model"
+	"github.com/deli/user-service/datastore"
+	"github.com/deli/user-service/model"
 	"github.com/labstack/gommon/log"
 )
 
