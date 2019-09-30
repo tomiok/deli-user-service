@@ -3,10 +3,11 @@ package engine
 import (
 	"deli/user-service/datastore"
 	"deli/user-service/model"
+	"github.com/labstack/gommon/log"
 )
 
 type Spec interface {
-	Save(u *model.User)
+	Save(u *model.User) (string, error)
 	GetById(uid string) *model.User
 }
 
@@ -24,9 +25,12 @@ func (e *Engine) GetById(uid string) *model.User {
 	return nil
 }
 
-func (e *Engine) Save(u *model.User) {
-	err := e.repo.SaveUser(u)
+func (e *Engine) Save(u *model.User) (string, error) {
+	id, err := e.repo.SaveUser(u)
 	if err != nil {
-		panic(err)
+		log.Errorf("cannot insert user")
+		return "", err
 	}
+
+	return id, nil
 }
