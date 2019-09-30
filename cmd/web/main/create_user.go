@@ -9,22 +9,13 @@ import (
 	"net/http"
 )
 
-func createsAdminHandler(e engine.Spec, w http.ResponseWriter, r *http.Request) {
+func createsAdminOrWriterHandler(e engine.Spec, w http.ResponseWriter, r *http.Request) {
+	userType := r.URL.Query()["type"][0]
 	w.Header().Set("Content-Type", "application/json")
-	u := model.User{}
-	u.UserType = &model.UserType{Title: "admin"}
-
-	body, err := ioutil.ReadAll(r.Body)
-	err = json.Unmarshal(body, &u)
-	log.Info("Mapping user")
 
 	defer r.Body.Close()
 
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
-	id, err := e.Save(u.DoMap())
+	id, err := e.Save(userFunction(w, r, userType))
 
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -39,4 +30,19 @@ func createsAdminHandler(e engine.Spec, w http.ResponseWriter, r *http.Request) 
 
 func createsWriterHandler(w http.ResponseWriter, r *http.Request) {
 
+}
+
+func userFunction(w http.ResponseWriter, r *http.Request, userType string) func() *model.User {
+
+	//TODO finish this error handling :(
+	return func() *model.User {
+		user := model.User{}
+		user.UserType = &model.UserType{Title: userType}
+
+		body, _ := ioutil.ReadAll(r.Body)
+		_ = json.Unmarshal(body, &user)
+
+		log.Info("Mapping user")
+		return user.DoMap()
+	}
 }

@@ -50,7 +50,7 @@ func Map(name string, lastName string, city string, country string, password str
 		}
 
 	default:
-		panic("Cannot enter another type rather than admin, writer or user")
+		panic("cannot enter another type rather than admin, writer or user")
 	}
 }
 

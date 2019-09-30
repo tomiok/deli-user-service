@@ -10,6 +10,7 @@ CREATE TABLE `user`
     `email`      varchar(100) DEFAULT NULL,
     `created_at` date         NOT NULL,
     `user_type`  varchar(100) NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `user_UN` (`username`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8

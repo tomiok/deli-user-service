@@ -6,8 +6,10 @@ import (
 	"github.com/labstack/gommon/log"
 )
 
+type GetUser func() *model.User
+
 type Spec interface {
-	Save(u *model.User) (string, error)
+	Save(f GetUser) (string, error)
 	GetById(uid string) *model.User
 }
 
@@ -25,8 +27,8 @@ func (e *Engine) GetById(uid string) *model.User {
 	return nil
 }
 
-func (e *Engine) Save(u *model.User) (string, error) {
-	id, err := e.repo.SaveUser(u)
+func (e *Engine) Save(f GetUser) (string, error) {
+	id, err := e.repo.SaveUser(f())
 	if err != nil {
 		log.Errorf("cannot insert user")
 		return "", err

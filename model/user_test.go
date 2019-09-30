@@ -1,6 +1,7 @@
 package model
 
 import (
+	"deli/user-service/commons"
 	"testing"
 )
 
@@ -39,8 +40,8 @@ func TestMapForWriter(t *testing.T) {
 
 func TestEncrypt(t *testing.T) {
 	pass := "solidPassword"
-	e := encryptPass(pass)
-	ee := encryptPass(pass)
+	e := commons.EncryptPass(pass)
+	ee := commons.EncryptPass(pass)
 
 	if e == pass {
 		t.Fail()
