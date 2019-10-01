@@ -1,1 +1,3 @@
-validations in adding a user
+- validations in adding a user
+- Add log in endpoint
+- Add get by id endpoint
