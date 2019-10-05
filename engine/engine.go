@@ -30,6 +30,7 @@ func (e *Engine) GetById(uid string) *model.User {
 func (e *Engine) Save(f GetUser) (string, error) {
 	id, err := e.repo.SaveUser(f())
 	if err != nil {
+		log.Infof()
 		log.Errorf("cannot insert user")
 		return "", err
 	}

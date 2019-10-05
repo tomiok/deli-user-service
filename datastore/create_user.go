@@ -8,6 +8,7 @@ import (
 
 type SaveUser interface {
 	SaveUser(u *model.User) (string, error)
+	GetUserById(id string) (*model.User, error)
 }
 
 type SaveUserRepo struct {
@@ -15,7 +16,7 @@ type SaveUserRepo struct {
 }
 
 // SaveUser saves a user in the DB, and returns the ID for that user.
-func (u SaveUserRepo) SaveUser(user *model.User) (string, error) {
+func (u *SaveUserRepo) SaveUser(user *model.User) (string, error) {
 
 	tx, err := u.DS.Begin()
 
@@ -53,4 +54,25 @@ func (u SaveUserRepo) SaveUser(user *model.User) (string, error) {
 	}
 
 	return id, nil
+}
+
+func (u *SaveUserRepo) GetUserById(id string) (*model.User, error) {
+	tx, err := u.DS.Begin()
+
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+
+	stmt, err := tx.Prepare("select u.id, u.name, u.last_name from user u where id = $1")
+
+	if err != nil {
+		return nil, err
+	}
+
+	rows, err := stmt.Query(id)
+
+	if err != nil {
+		log.Errorf("cannot execute statement, %s", err.Error())
+	}
+
 }
