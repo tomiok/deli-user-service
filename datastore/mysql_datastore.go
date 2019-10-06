@@ -2,7 +2,7 @@ package datastore
 
 import (
 	"database/sql"
-	"github.com/deli/user-service/logs"
+	"github.com/deli/user-service/commons/logs"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
 )

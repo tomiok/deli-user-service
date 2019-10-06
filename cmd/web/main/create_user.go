@@ -2,8 +2,8 @@ package main
 
 import (
 	"encoding/json"
+	"github.com/deli/user-service/commons/logs"
 	"github.com/deli/user-service/engine"
-	"github.com/deli/user-service/logs"
 	"github.com/deli/user-service/model"
 	"io/ioutil"
 	"net/http"
@@ -28,9 +28,6 @@ func createsAdminOrWriterHandler(e engine.Spec, w http.ResponseWriter, r *http.R
 	_ = json.NewEncoder(w).Encode(res)
 }
 
-func createsWriterHandler(w http.ResponseWriter, r *http.Request) {
-
-}
 
 func userFunction(r *http.Request, userType string) func() *model.User {
 

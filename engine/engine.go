@@ -1,8 +1,8 @@
 package engine
 
 import (
+	"github.com/deli/user-service/commons/logs"
 	"github.com/deli/user-service/datastore"
-	"github.com/deli/user-service/logs"
 	"github.com/deli/user-service/model"
 )
 

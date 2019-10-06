@@ -1,9 +1,9 @@
 package main
 
 import (
+	"github.com/deli/user-service/commons/logs"
 	"github.com/deli/user-service/datastore"
 	"github.com/deli/user-service/engine"
-	"github.com/deli/user-service/logs"
 	"github.com/go-chi/chi"
 	"net/http"
 	"os"
