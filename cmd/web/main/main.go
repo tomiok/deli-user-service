@@ -4,7 +4,7 @@ import (
 	"github.com/deli/user-service/datastore"
 	"github.com/deli/user-service/engine"
 	"github.com/go-chi/chi"
-	"github.com/labstack/gommon/log"
+	"github.com/deli/user-service/logs"
 	"net/http"
 	"os"
 	"os/signal"
@@ -17,7 +17,7 @@ const (
 )
 
 func main() {
-	log.Infof("CPUs: %d", runtime.NumCPU())
+	logs.Infof("CPUs: %d", runtime.NumCPU())
 
 	mux := chi.NewRouter()
 	connection := createConnection(dbPath)

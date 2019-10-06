@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"github.com/deli/user-service/engine"
 	"github.com/deli/user-service/model"
-	"github.com/labstack/gommon/log"
+	"github.com/deli/user-service/logs"
 	"io/ioutil"
 	"net/http"
 )
@@ -42,7 +42,7 @@ func userFunction(r *http.Request, userType string) func() *model.User {
 		body, _ := ioutil.ReadAll(r.Body)
 		_ = json.Unmarshal(body, &user)
 
-		log.Info("Mapping user")
+		logs.Info("Mapping user")
 		return user.DoMap()
 	}
 }

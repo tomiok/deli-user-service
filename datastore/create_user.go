@@ -2,8 +2,8 @@ package datastore
 
 import (
 	"errors"
+	"github.com/deli/user-service/logs"
 	"github.com/deli/user-service/model"
-	"github.com/labstack/gommon/log"
 )
 
 type SaveUser interface {
@@ -34,7 +34,7 @@ func (u *SaveUserRepo) SaveUser(user *model.User) (string, error) {
 	defer func() {
 		err := stmt.Close()
 		if err != nil {
-			log.Error("cannot close the statement")
+			logs.Error("cannot close the statement")
 		}
 	}()
 
@@ -43,7 +43,7 @@ func (u *SaveUserRepo) SaveUser(user *model.User) (string, error) {
 		user.Country, user.EmailAddress, user.UserType.Title)
 
 	if err != nil {
-		log.Errorf("cannot execute prepared statement: %s", err.Error())
+		logs.Errorf("cannot execute prepared statement: %s", err.Error())
 		return "", err
 	}
 
@@ -73,7 +73,7 @@ func (u *SaveUserRepo) GetUserById(id string) (*model.User, error) {
 	defer func() {
 		err := stmt.Close()
 		if err != nil {
-			log.Error("cannot close the statement")
+			logs.Error("cannot close the statement")
 		}
 	}()
 

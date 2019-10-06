@@ -3,7 +3,7 @@ package engine
 import (
 	"github.com/deli/user-service/datastore"
 	"github.com/deli/user-service/model"
-	"github.com/labstack/gommon/log"
+	"github.com/deli/user-service/logs"
 )
 
 type GetUser func() *model.User
@@ -36,7 +36,7 @@ func (e *Engine) GetById(id string) *model.User {
 func (e *Engine) Save(f GetUser) (string, error) {
 	id, err := e.repo.SaveUser(f())
 	if err != nil {
-		log.Errorf("cannot insert user")
+		logs.Errorf("cannot insert user")
 		return "", err
 	}
 

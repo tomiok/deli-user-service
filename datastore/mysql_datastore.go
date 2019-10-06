@@ -2,8 +2,9 @@ package datastore
 
 import (
 	"database/sql"
+	"github.com/deli/user-service/logs"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/labstack/gommon/log"
+	"log"
 )
 
 type MysqlDS struct {
@@ -19,7 +20,7 @@ func NewMysqlDS(source string) (*MysqlDS, error) {
 		return nil, err
 	}
 
-	log.Infof("Connection mysql %s", source)
+	logs.Infof("Connection mysql %s", source)
 
 	return &MysqlDS{DB: connection}, nil
 }
