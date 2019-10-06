@@ -3,8 +3,8 @@ package main
 import (
 	"github.com/deli/user-service/datastore"
 	"github.com/deli/user-service/engine"
-	"github.com/go-chi/chi"
 	"github.com/deli/user-service/logs"
+	"github.com/go-chi/chi"
 	"net/http"
 	"os"
 	"os/signal"

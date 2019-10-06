@@ -3,9 +3,9 @@ package logs
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"os"
 	"time"
-	"github.com/sirupsen/logrus"
 )
 
 // InitDefault inits logs with default values (stdout, infolevel, jsonformatter)

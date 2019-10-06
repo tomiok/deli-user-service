@@ -2,8 +2,8 @@ package engine
 
 import (
 	"github.com/deli/user-service/datastore"
-	"github.com/deli/user-service/model"
 	"github.com/deli/user-service/logs"
+	"github.com/deli/user-service/model"
 )
 
 type GetUser func() *model.User

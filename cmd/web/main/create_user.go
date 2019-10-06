@@ -3,8 +3,8 @@ package main
 import (
 	"encoding/json"
 	"github.com/deli/user-service/engine"
-	"github.com/deli/user-service/model"
 	"github.com/deli/user-service/logs"
+	"github.com/deli/user-service/model"
 	"io/ioutil"
 	"net/http"
 )
