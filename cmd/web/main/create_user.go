@@ -15,7 +15,7 @@ func createsAdminOrWriterHandler(e engine.Spec, w http.ResponseWriter, r *http.R
 
 	defer r.Body.Close()
 
-	id, err := e.Save(userFunction(w, r, userType))
+	id, err := e.Save(userFunction(r, userType))
 
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -32,7 +32,7 @@ func createsWriterHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func userFunction(w http.ResponseWriter, r *http.Request, userType string) func() *model.User {
+func userFunction(r *http.Request, userType string) func() *model.User {
 
 	//TODO finish this error handling :(
 	return func() *model.User {

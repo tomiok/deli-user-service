@@ -63,16 +63,37 @@ func (u *SaveUserRepo) GetUserById(id string) (*model.User, error) {
 		return nil, errors.New(err.Error())
 	}
 
-	stmt, err := tx.Prepare("select u.id, u.name, u.last_name from user u where id = $1")
+	stmt, err := tx.Prepare("select u.id, u.name, u.last_name, u.username, u.email, u.city, u.country, " +
+		"u.created_at from user u where id = ?")
 
 	if err != nil {
 		return nil, err
 	}
 
-	rows, err := stmt.Query(id)
+	defer func() {
+		err := stmt.Close()
+		if err != nil {
+			log.Error("cannot close the statement")
+		}
+	}()
+
+	rows := stmt.QueryRow(id)
+
+	var user model.User
+
+	//TODO add user type
+	err = rows.Scan(&user.Uid, &user.Name, &user.LastName,
+		&user.Username, &user.EmailAddress, &user.City, &user.Country, &user.CreatedAt)
+
+	err = tx.Commit()
 
 	if err != nil {
-		log.Errorf("cannot execute statement, %s", err.Error())
+		return nil, err
 	}
 
+	if user.Uid == "" {
+		return nil, errors.New("cannot found user")
+	}
+
+	return &user, nil
 }

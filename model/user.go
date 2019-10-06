@@ -67,14 +67,14 @@ func createUserName(name string, lastName string) string {
 }
 
 type User struct {
-	Uid          string    `json:"uid"`
-	Name         string    `json:"name"`
-	LastName     string    `json:"last_name"`
-	Username     string    `json:"username"`
-	Password     string    `json:"password"`
-	City         string    `json:"city"`
-	Country      string    `json:"country"`
-	EmailAddress string    `json:"email"`
-	CreatedAt    time.Time `json:"created_at"`
-	UserType     *UserType `json:"user_type"`
+	Uid          string    `json:"uid,omitempty"`
+	Name         string    `json:"name,omitempty"`
+	LastName     string    `json:"last_name,omitempty"`
+	Username     string    `json:"username,omitempty"`
+	Password     string    `json:"password,omitempty"`
+	City         string    `json:"city,omitempty"`
+	Country      string    `json:"country,omitempty"`
+	EmailAddress string    `json:"email,omitempty"`
+	CreatedAt    time.Time `json:"created_at,omitempty"`
+	UserType     *UserType `json:"user_type,omitempty"`
 }

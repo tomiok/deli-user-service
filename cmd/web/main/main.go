@@ -13,7 +13,7 @@ import (
 
 const (
 	port   = ":8080"
-	dbPath = "root:root@tcp(localhost:3306)/deli_user"
+	dbPath = "root:root@tcp(localhost:3306)/deli_user?parseTime=true"
 )
 
 func main() {

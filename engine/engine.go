@@ -23,14 +23,19 @@ type Engine struct {
 	repo *datastore.SaveUserRepo
 }
 
-func (e *Engine) GetById(uid string) *model.User {
-	return nil
+func (e *Engine) GetById(id string) *model.User {
+	u, err := e.repo.GetUserById(id)
+
+	if err != nil {
+
+	}
+
+	return u
 }
 
 func (e *Engine) Save(f GetUser) (string, error) {
 	id, err := e.repo.SaveUser(f())
 	if err != nil {
-		log.Infof()
 		log.Errorf("cannot insert user")
 		return "", err
 	}
