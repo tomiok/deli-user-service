@@ -17,6 +17,7 @@ const (
 )
 
 func main() {
+	logs.InitDefault()
 	logs.Infof("CPUs: %d", runtime.NumCPU())
 
 	mux := chi.NewRouter()
