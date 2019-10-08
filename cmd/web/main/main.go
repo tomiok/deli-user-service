@@ -21,10 +21,10 @@ func main() {
 	logs.Infof("CPUs: %d", runtime.NumCPU())
 
 	mux := chi.NewRouter()
-	connection := createConnection(dbPath)
+	//connection := createConnection(dbPath)
 
 	saveRepo := &datastore.SaveUserRepo{
-		DS: connection,
+	//	DS: connection,
 	}
 	e := engine.New(saveRepo)
 
