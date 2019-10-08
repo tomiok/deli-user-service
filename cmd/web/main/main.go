@@ -43,7 +43,7 @@ func main() {
 func startServer(mux *chi.Mux, port string) {
 	err := http.ListenAndServe(port, mux)
 	if err != nil {
-		panic("cannot initialize the server")
+		panic("cannot initialize the server" + err.Error())
 	}
 }
 
