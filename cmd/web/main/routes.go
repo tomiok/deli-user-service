@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"github.com/deli/user-service/engine"
 	"github.com/go-chi/chi"
 	"net/http"
@@ -15,4 +16,11 @@ func Routes(e engine.Spec, router *chi.Mux) {
 			createsAdminOrWriterHandler(e, w, r)
 		})
 	})
+
+	router.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{"status": "OK"})
+	})
+
 }
