@@ -17,6 +17,7 @@ const (
 )
 
 func main() {
+	port := os.Getenv("PORT")
 	logs.InitDefault()
 	logs.Infof("CPUs: %d", runtime.NumCPU())
 
