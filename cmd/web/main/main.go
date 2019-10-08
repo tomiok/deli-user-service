@@ -25,7 +25,7 @@ func main() {
 	//connection := createConnection(dbPath)
 
 	saveRepo := &datastore.SaveUserRepo{
-	//	DS: connection,
+		//	DS: connection,
 	}
 	e := engine.New(saveRepo)
 
@@ -41,9 +41,9 @@ func main() {
 }
 
 func startServer(mux *chi.Mux, port string) {
-	err := http.ListenAndServe(port, mux)
+	err := http.ListenAndServe(":"+port, mux)
 	if err != nil {
-		panic("cannot initialize the server" + err.Error())
+		panic("cannot initialize the server due to: " + err.Error())
 	}
 }
 
