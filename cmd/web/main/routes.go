@@ -20,7 +20,7 @@ func Routes(e engine.Spec, router *chi.Mux) {
 	router.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 
-		_ = json.NewEncoder(w).Encode(map[string]interface{}{"status": "OK"})
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{"status": "OK/ te amo en demasia"})
 	})
 
 }
