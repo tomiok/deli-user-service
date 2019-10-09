@@ -45,6 +45,8 @@ func startServer(mux *chi.Mux, port string) {
 	if err != nil {
 		panic("cannot initialize the server due to: " + err.Error())
 	}
+
+	logs.Infof("server running in port %d", port)
 }
 
 func createConnection(conn string) *datastore.MysqlDS {
