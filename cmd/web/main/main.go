@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/deli/user-service/commons/logs"
 	"github.com/deli/user-service/datastore"
 	"github.com/deli/user-service/engine"
@@ -12,11 +13,18 @@ import (
 )
 
 const (
-	fixed  = "8080"
-	dbPath = "root:root@tcp(localhost:3306)/deli_user?parseTime=true"
-)
+	fixed  = "8030"
+	dbPath = "%s:%s@tcp(%s:3306)/deli_users?parseTime=true"
+	)
 
 func main() {
+	dbPass := os.Getenv("DB_PASS")
+	dbUser := os.Getenv("DB_USER")
+	dbURL := os.Getenv("DB_URL")
+	if dbPass == "" && dbUser == ""{
+		dbPass,dbUser, dbURL = "root", "root", "localhost"
+	}
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = fixed
@@ -25,10 +33,10 @@ func main() {
 	logs.Infof("CPUs: %d", runtime.NumCPU())
 
 	mux := chi.NewRouter()
-	//connection := createConnection(dbPath)
+	connection := createConnection(fmt.Sprintf(dbPath, dbUser, dbPass, dbURL))
 
 	saveRepo := &datastore.SaveUserRepo{
-		//	DS: connection,
+			DS: connection,
 	}
 	e := engine.New(saveRepo)
 

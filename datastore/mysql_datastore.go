@@ -2,7 +2,6 @@ package datastore
 
 import (
 	"database/sql"
-	"github.com/deli/user-service/commons/logs"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
 )
@@ -19,8 +18,5 @@ func NewMysqlDS(source string) (*MysqlDS, error) {
 		log.Fatal(err)
 		return nil, err
 	}
-
-	logs.Infof("Connection mysql %s", source)
-
 	return &MysqlDS{DB: connection}, nil
 }

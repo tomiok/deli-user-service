@@ -24,7 +24,7 @@ func (u *SaveUserRepo) SaveUser(user *model.User) (string, error) {
 		return "", errors.New(err.Error())
 	}
 
-	stmt, err := tx.Prepare("INSERT INTO deli_user.`user`" +
+	stmt, err := tx.Prepare("INSERT INTO `user`" +
 		" (id, name, last_name, password, username, city, country, email, created_at, user_type) " +
 		"VALUES (?,?,?,?,?,?,?,?,now(),?)")
 	if err != nil {
@@ -55,5 +55,3 @@ func (u *SaveUserRepo) SaveUser(user *model.User) (string, error) {
 
 	return id, nil
 }
-
-
