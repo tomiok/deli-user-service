@@ -12,12 +12,15 @@ import (
 )
 
 const (
-	port   = ":8080"
+	fixed  = "8080"
 	dbPath = "root:root@tcp(localhost:3306)/deli_user?parseTime=true"
 )
 
 func main() {
 	port := os.Getenv("PORT")
+	if port == "" {
+		port = fixed
+	}
 	logs.InitDefault()
 	logs.Infof("CPUs: %d", runtime.NumCPU())
 
@@ -41,12 +44,11 @@ func main() {
 }
 
 func startServer(mux *chi.Mux, port string) {
+	logs.Infof("server running in port %s", port)
 	err := http.ListenAndServe(":"+port, mux)
 	if err != nil {
 		panic("cannot initialize the server due to: " + err.Error())
 	}
-
-	logs.Infof("server running in port %d", port)
 }
 
 func createConnection(conn string) *datastore.MysqlDS {
