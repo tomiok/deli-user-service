@@ -2,8 +2,10 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/deli/user-service/engine"
 	"github.com/go-chi/chi"
+	"github.com/go-chi/docgen"
 	"net/http"
 )
 
@@ -23,4 +25,9 @@ func Routes(e engine.Spec, router *chi.Mux) {
 		_ = json.NewEncoder(w).Encode(map[string]interface{}{"status": "OK"})
 	})
 
+	if true {
+
+		doc := docgen.JSONRoutesDoc(router)
+		fmt.Println(doc)
+	}
 }
