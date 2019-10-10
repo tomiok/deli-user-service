@@ -13,14 +13,14 @@ type Spec interface {
 	GetById(uid string) *model.User
 }
 
-func New(saveRepo *datastore.SaveUserRepo) Spec {
+func New(saveRepo *datastore.UserRepository) Spec {
 	return &Engine{
 		repo: saveRepo,
 	}
 }
 
 type Engine struct {
-	repo *datastore.SaveUserRepo
+	repo *datastore.UserRepository
 }
 
 func (e *Engine) GetById(id string) *model.User {

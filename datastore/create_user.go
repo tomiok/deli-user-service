@@ -6,17 +6,18 @@ import (
 	"github.com/deli/user-service/model"
 )
 
-type SaveUser interface {
+type RepositorySpec interface {
 	SaveUser(u *model.User) (string, error)
 	GetUserById(id string) (*model.User, error)
+	ValidateUserByPassword(username, password string) (*model.User, error)
 }
 
-type SaveUserRepo struct {
+type UserRepository struct {
 	DS *MysqlDS
 }
 
-// SaveUser saves a user in the DB, and returns the ID for that user.
-func (u *SaveUserRepo) SaveUser(user *model.User) (string, error) {
+// SaveUSer saves a user in the DB, and returns the ID for that user.
+func (u *UserRepository) SaveUser(user *model.User) (string, error) {
 
 	tx, err := u.DS.Begin()
 

@@ -35,7 +35,7 @@ func main() {
 	mux := chi.NewRouter()
 	connection := createConnection(fmt.Sprintf(dbPath, dbUser, dbPass, dbURL))
 
-	saveRepo := &datastore.SaveUserRepo{
+	saveRepo := &datastore.UserRepository{
 			DS: connection,
 	}
 	e := engine.New(saveRepo)

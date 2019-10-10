@@ -6,7 +6,7 @@ import (
 	"github.com/deli/user-service/model"
 )
 
-func (u *SaveUserRepo) GetUserById(id string) (*model.User, error) {
+func (u *UserRepository) GetUserById(id string) (*model.User, error) {
 	tx, err := u.DS.Begin()
 
 	if err != nil {
