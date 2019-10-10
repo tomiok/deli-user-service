@@ -13,9 +13,9 @@ type Spec interface {
 	GetById(uid string) *model.User
 }
 
-func New(saveRepo *datastore.UserRepository) Spec {
+func New(userRepo *datastore.UserRepository) Spec {
 	return &Engine{
-		repo: saveRepo,
+		repo: userRepo,
 	}
 }
 
