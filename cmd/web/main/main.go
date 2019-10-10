@@ -15,14 +15,14 @@ import (
 const (
 	fixed  = "8030"
 	dbPath = "%s:%s@tcp(%s:3306)/deli_users?parseTime=true"
-	)
+)
 
 func main() {
 	dbPass := os.Getenv("DB_PASS")
 	dbUser := os.Getenv("DB_USER")
 	dbURL := os.Getenv("DB_URL")
-	if dbPass == "" && dbUser == ""{
-		dbPass,dbUser, dbURL = "root", "root", "localhost"
+	if dbPass == "" && dbUser == "" {
+		dbPass, dbUser, dbURL = "root", "root", "localhost"
 	}
 
 	port := os.Getenv("PORT")
@@ -36,7 +36,7 @@ func main() {
 	connection := createConnection(fmt.Sprintf(dbPath, dbUser, dbPass, dbURL))
 
 	saveRepo := &datastore.UserRepository{
-			DS: connection,
+		DS: connection,
 	}
 	e := engine.New(saveRepo)
 
@@ -53,7 +53,13 @@ func main() {
 
 func startServer(mux *chi.Mux, port string) {
 	logs.Infof("server running in port %s", port)
-	err := http.ListenAndServe(":"+port, mux)
+
+	s := http.Server{
+		Addr:    ":" + port,
+		Handler: mux,
+	}
+
+	err := s.ListenAndServe()
 	if err != nil {
 		panic("cannot initialize the server due to: " + err.Error())
 	}

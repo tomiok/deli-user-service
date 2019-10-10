@@ -17,17 +17,16 @@ func Routes(e engine.Spec, router *chi.Mux) {
 		r.Post("/aw", func(w http.ResponseWriter, r *http.Request) {
 			createsAdminOrWriterHandler(e, w, r)
 		})
-	})
-
-	router.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-
-		_ = json.NewEncoder(w).Encode(map[string]interface{}{"status": "OK"})
+		r.Get("/", healthCheck)
 	})
 
 	if true {
-
 		doc := docgen.JSONRoutesDoc(router)
 		fmt.Println(doc)
 	}
+}
+
+func healthCheck(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	_ = json.NewEncoder(w).Encode(map[string]interface{}{"status": "OK"})
 }
