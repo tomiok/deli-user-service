@@ -1,4 +1,4 @@
 - validations in adding a user
-- Add login endpoint
 - Add get by id endpoint (finish validation and new file for the logic)
 - Add swagger
+- Add login endpoint && add JWT
