@@ -32,5 +32,5 @@ func validateDBQuery(id string) (string, error) {
 		return "", errors.New("user not found in database")
 	}
 
-	return token.Encode()
+	return token.Encode(id)
 }
