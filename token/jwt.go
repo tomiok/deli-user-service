@@ -14,7 +14,7 @@ type JWTToken struct {
 }
 
 func Init(secret string) {
-	jjwt := jwtauth.New(alg, secret, nil)
+	jjwt := jwtauth.New(alg, []byte(secret), nil)
 
 	Token = &JWTToken{
 		AuthJWT: jjwt,
@@ -22,7 +22,7 @@ func Init(secret string) {
 }
 
 func Encode() (string, error) {
-	_, jsonToken, err := Token.AuthJWT.Encode(jwt.MapClaims{"user": "test"})
+	_, jsonToken, err := Token.AuthJWT.Encode(jwt.MapClaims{"user_id": "test"})
 
 	return jsonToken, err
 }

@@ -16,7 +16,7 @@ import (
 const (
 	fixed  = "8080"
 	dbPath = "%s:%s@tcp(%s:3306)/deli_users?parseTime=true"
-	secret = "is_a_secret"
+	secret = "isasecret"
 )
 
 func main() {
