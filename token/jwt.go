@@ -25,7 +25,7 @@ func Encode(userUid string) (string, error) {
 	claims := jwt.MapClaims{}
 	claims["user_id"] = userUid
 	jwtauth.SetIssuedAt(claims, time.Now())
-	jwtauth.SetExpiry(claims, time.Now().Add(time.Hour*24*10))
+	jwtauth.SetExpiry(claims, time.Now().Add(time.Hour*240))
 	_, jsonToken, err := Token.AuthJWT.Encode(claims)
 
 	return jsonToken, err
