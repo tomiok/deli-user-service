@@ -17,6 +17,10 @@ func Routes(e engine.Spec, router *chi.Mux) {
 		r.Post("/aw", func(w http.ResponseWriter, r *http.Request) {
 			createsAdminOrWriterHandler(e, w, r)
 		})
+
+		r.Post("/login", func(w http.ResponseWriter, r *http.Request) {
+
+		})
 	})
 
 	router.Get("/", healthCheck)

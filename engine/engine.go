@@ -11,6 +11,7 @@ type GetUser func() *model.User
 type Spec interface {
 	Save(f GetUser) (string, error)
 	GetById(uid string) *model.User
+	ValidateUser(username, password string) (string, error)
 }
 
 func New(userRepo *datastore.UserRepository) Spec {
@@ -27,7 +28,7 @@ func (e *Engine) GetById(id string) *model.User {
 	u, err := e.repo.GetUserById(id)
 
 	if err != nil {
-
+		return nil
 	}
 
 	return u
@@ -41,4 +42,8 @@ func (e *Engine) Save(f GetUser) (string, error) {
 	}
 
 	return id, nil
+}
+
+func (e *Engine) ValidateUser(username, password string) (string, error) {
+	return e.repo.ValidateUserByPassword(username, password)
 }
