@@ -7,6 +7,8 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/docgen"
 	"net/http"
+	"runtime"
+	"time"
 )
 
 func Routes(e engine.Spec, router *chi.Mux) {
@@ -19,7 +21,7 @@ func Routes(e engine.Spec, router *chi.Mux) {
 		})
 
 		r.Post("/login", func(w http.ResponseWriter, r *http.Request) {
-
+			validateUserHandler(e, w, r)
 		})
 	})
 
@@ -33,5 +35,11 @@ func Routes(e engine.Spec, router *chi.Mux) {
 
 func healthCheck(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
-	_ = json.NewEncoder(w).Encode(map[string]interface{}{"status": "OK"})
+	_ = json.NewEncoder(w).Encode(map[string]interface{}{
+		"status":      "OK",
+		"server_time": time.Now(),
+		"server_OS":   runtime.GOOS,
+		"server_arch": runtime.GOARCH,
+		"CPUs":        runtime.NumCPU(),
+	})
 }
