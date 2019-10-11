@@ -6,8 +6,11 @@ import (
 	"net/http"
 )
 
-func validateUserHandler(e engine.Spec, w http.ResponseWriter, r *http.Request) {
-	token, err := e.ValidateUser("", "")
+type encryptFn func(r *http.Request) (string, string)
+
+func validateUserHandler(e engine.Spec, w http.ResponseWriter, r *http.Request, fn encryptFn) {
+	username, pass := fn(r)
+	token, err := e.ValidateUser(username, pass)
 
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)

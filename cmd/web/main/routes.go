@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/deli/user-service/commons"
 	"github.com/deli/user-service/engine"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/docgen"
@@ -21,7 +22,7 @@ func Routes(e engine.Spec, router *chi.Mux) {
 		})
 
 		r.Post("/login", func(w http.ResponseWriter, r *http.Request) {
-			validateUserHandler(e, w, r)
+			validateUserHandler(e, w, r, encrypt)
 		})
 	})
 
@@ -42,4 +43,15 @@ func healthCheck(w http.ResponseWriter, r *http.Request) {
 		"server_arch": runtime.GOARCH,
 		"CPUs":        runtime.NumCPU(),
 	})
+}
+
+func encrypt(r *http.Request) (string, string) {
+	type credentials struct {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
+	cred := credentials{}
+	_ = json.NewDecoder(r.Body).Decode(&cred)
+
+	return cred.Username, commons.EncryptPass(cred.Password)
 }

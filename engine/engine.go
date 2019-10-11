@@ -21,7 +21,7 @@ func New(userRepo *datastore.UserRepository) Spec {
 }
 
 type Engine struct {
-	repo *datastore.UserRepository
+	repo datastore.RepositorySpec
 }
 
 func (e *Engine) GetById(id string) *model.User {

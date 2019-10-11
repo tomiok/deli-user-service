@@ -15,11 +15,11 @@ func (u *UserRepository) ValidateUserByPassword(username, password string) (stri
 	}
 
 	var user model.User
-	err = tx.QueryRow("select u.id from user u where u.username = ? and u.password = ?").
-		Scan(&user.Uid, &user.Name, &user.LastName)
+	err = tx.QueryRow("select u.id from user u where u.username = ? and u.password = ?", username, password).
+		Scan(&user.Uid)
 
 	if err != nil {
-		return "", errors.New("cannot execute the query " + err.Error())
+		return "", errors.New("query errors:: " + err.Error())
 	}
 
 	jsonToken, err := validateDBQuery(user.Uid)
