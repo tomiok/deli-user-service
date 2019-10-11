@@ -3,6 +3,7 @@ package datastore
 import (
 	"errors"
 	"github.com/deli/user-service/model"
+	"github.com/deli/user-service/token"
 )
 
 func (u *UserRepository) ValidateUserByPassword(username, password string) (string, error) {
@@ -21,5 +22,15 @@ func (u *UserRepository) ValidateUserByPassword(username, password string) (stri
 		return "", errors.New("cannot execute the query " + err.Error())
 	}
 
-	return "tokem", nil
+	jsonToken, err := validateDBQuery(user.Uid)
+
+	return jsonToken, err
+}
+
+func validateDBQuery(id string) (string, error) {
+	if id == "" {
+		return "", errors.New("user not found in database")
+	}
+
+	return token.Encode()
 }

@@ -17,8 +17,9 @@ func Routes(e engine.Spec, router *chi.Mux) {
 		r.Post("/aw", func(w http.ResponseWriter, r *http.Request) {
 			createsAdminOrWriterHandler(e, w, r)
 		})
-		r.Get("/", healthCheck)
 	})
+
+	router.Get("/", healthCheck)
 
 	if true {
 		doc := docgen.JSONRoutesDoc(router)

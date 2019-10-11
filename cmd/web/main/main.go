@@ -5,6 +5,7 @@ import (
 	"github.com/deli/user-service/commons/logs"
 	"github.com/deli/user-service/datastore"
 	"github.com/deli/user-service/engine"
+	"github.com/deli/user-service/token"
 	"github.com/go-chi/chi"
 	"net/http"
 	"os"
@@ -13,8 +14,9 @@ import (
 )
 
 const (
-	fixed  = "8030"
+	fixed  = "8080"
 	dbPath = "%s:%s@tcp(%s:3306)/deli_users?parseTime=true"
+	secret = "is_a_secret"
 )
 
 func main() {
@@ -24,7 +26,8 @@ func main() {
 	if dbPass == "" && dbUser == "" {
 		dbPass, dbUser, dbURL = "root", "root", "localhost"
 	}
-
+	// init token
+	initJWT(secret)
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = fixed
@@ -54,7 +57,7 @@ func main() {
 func startServer(mux *chi.Mux, port string) {
 	logs.Infof("server running in port %s", port)
 
-	s := http.Server{
+	s := &http.Server{
 		Addr:    ":" + port,
 		Handler: mux,
 	}
@@ -73,4 +76,8 @@ func createConnection(conn string) *datastore.MysqlDS {
 	}
 
 	return DS
+}
+
+func initJWT(secret string) {
+	token.Init(secret)
 }
