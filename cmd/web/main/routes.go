@@ -9,6 +9,7 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/docgen"
+	"github.com/go-chi/render"
 	"net/http"
 	"runtime"
 	"time"
@@ -17,7 +18,10 @@ import (
 func Routes(e engine.Spec, router *chi.Mux) {
 
 	router.Route("/users", func(rt chi.Router) {
+		rt.Use(render.SetContentType(render.ContentTypeJSON))
 		rt.Use(middleware.Logger)
+		rt.Use(middleware.Recoverer)
+		rt.Use(middleware.RequestID)
 
 		rt.Get("/{userId}", func(w http.ResponseWriter, r *http.Request) {
 			getUSerByIdHandler(e, w, r)

@@ -8,6 +8,7 @@ github.com/go-chi/docgen v1.0.5 h1:TiGvJAuVPZJ9zFSwoF52eORe0SztOYqf9C79LVw/xbY=
 github.com/go-chi/docgen v1.0.5/go.mod h1:Nm4H4RaynSlvTexxWYWwXBzrwZKRE00MrkIIcJelhWM=
 github.com/go-chi/jwtauth v4.0.3+incompatible h1:hPhobLUgh7fMpA1qUDdId14u2Z93M22fCNPMVLNWeHU=
 github.com/go-chi/jwtauth v4.0.3+incompatible/go.mod h1:Q5EIArY/QnD6BdS+IyDw7B2m6iNbnPxtfd6/BcmtWbs=
+github.com/go-chi/render v1.0.1 h1:4/5tis2cKaNdnv9zFLfXzcquC9HbeZgCnxGnKrltBS8=
 github.com/go-chi/render v1.0.1/go.mod h1:pq4Rr7HbnsdaeHagklXub+p6Wd16Af5l9koip1OvJns=
 github.com/go-sql-driver/mysql v1.4.1 h1:g24URVg0OFbNUTx9qqY1IRZ9D9z3iPyi5zKhQZpNwpA=
 github.com/go-sql-driver/mysql v1.4.1/go.mod h1:zAC/RDZ24gD3HViQzih4MyKcchzm+sOG5ZlKdlhCg5w=
