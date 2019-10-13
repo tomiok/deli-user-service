@@ -17,20 +17,26 @@ import (
 
 func Routes(e engine.Spec, router *chi.Mux) {
 
+	router.Use(render.SetContentType(render.ContentTypeJSON),
+		middleware.Logger,
+		middleware.Recoverer,
+		middleware.RequestID,
+		middleware.DefaultCompress,
+		middleware.Heartbeat("/ping"))
+
 	router.Route("/users", func(rt chi.Router) {
-		rt.Use(render.SetContentType(render.ContentTypeJSON))
-		rt.Use(middleware.Logger)
-		rt.Use(middleware.Recoverer)
-		rt.Use(middleware.RequestID)
 
 		rt.Get("/{userId}", func(w http.ResponseWriter, r *http.Request) {
+			w.Header().Add("Content-Type", "application/json")
 			getUSerByIdHandler(e, w, r)
 		})
 		rt.Post("/aw", func(w http.ResponseWriter, r *http.Request) {
+			w.Header().Add("Content-Type", "application/json")
 			createsAdminOrWriterHandler(e, w, r)
 		})
 
 		rt.Post("/login", func(w http.ResponseWriter, r *http.Request) {
+			w.Header().Add("Content-Type", "application/json")
 			validateUserHandler(e, w, r, encrypt)
 		})
 	})
@@ -70,5 +76,12 @@ func customLogger(next http.Handler) http.Handler {
 		logs.Info("Executing middlewareOne")
 		next.ServeHTTP(w, r)
 		logs.Info("Executing middlewareOne again")
+	})
+}
+
+func contentTypeM(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("Content-Type", "application/json")
+		next.ServeHTTP(w, r)
 	})
 }

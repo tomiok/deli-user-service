@@ -10,7 +10,17 @@ import (
 func getUSerByIdHandler(e engine.Spec, w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "userId")
 	u := e.GetById(id)
-	w.Header().Set("Content-Type", "application/json")
+
+	if u == nil {
+		w.WriteHeader(http.StatusNotFound)
+		res := map[string]string{
+			"operation_status": "FAILED",
+			"reason":           "user with id " + id + "not found",
+		}
+		_ = json.NewEncoder(w).Encode(res)
+		return
+	}
+
 	w.WriteHeader(http.StatusOK)
 	_ = json.NewEncoder(w).Encode(u)
 
