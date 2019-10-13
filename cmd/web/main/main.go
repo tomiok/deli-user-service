@@ -38,10 +38,10 @@ func main() {
 	mux := chi.NewRouter()
 	connection := createConnection(fmt.Sprintf(dbPath, dbUser, dbPass, dbURL))
 
-	saveRepo := &datastore.UserRepository{
+	userRepository := &datastore.UserRepository{
 		DS: connection,
 	}
-	e := engine.New(saveRepo)
+	e := engine.New(userRepository)
 
 	Routes(e, mux)
 	go func() {
