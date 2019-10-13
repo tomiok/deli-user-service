@@ -10,7 +10,6 @@ import (
 func getUSerByIdHandler(e engine.Spec, w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "userId")
 	u := e.GetById(id)
-
 	if u == nil {
 		w.WriteHeader(http.StatusNotFound)
 		res := map[string]string{
@@ -23,5 +22,4 @@ func getUSerByIdHandler(e engine.Spec, w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 	_ = json.NewEncoder(w).Encode(u)
-
 }

@@ -2,3 +2,10 @@
 - Add get by id endpoint (finish validation and new file for the logic)
 - Add swagger
 - Add login endpoint && add JWT
+
+
+
+	How request id works ==> r is request context
+	requestID := middleware.GetReqID(r.Context())
+	logs.Info("***********")
+	logs.Info(requestID)
