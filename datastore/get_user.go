@@ -3,10 +3,10 @@ package datastore
 import (
 	"errors"
 	"github.com/deli/user-service/commons/logs"
-	"github.com/deli/user-service/model"
+	"github.com/deli/user-service/models"
 )
 
-func (u *UserRepository) GetUserById(id string) (*model.User, error) {
+func (u *UserRepository) GetUserById(id string) (*models.User, error) {
 	tx, err := u.DS.Begin()
 
 	if err != nil {
@@ -29,7 +29,7 @@ func (u *UserRepository) GetUserById(id string) (*model.User, error) {
 
 	rows := stmt.QueryRow(id)
 
-	var user model.User
+	var user models.User
 
 	//TODO add user type
 	err = rows.Scan(&user.Uid, &user.Name, &user.LastName,

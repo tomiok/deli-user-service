@@ -3,14 +3,14 @@ package engine
 import (
 	"github.com/deli/user-service/commons/logs"
 	"github.com/deli/user-service/datastore"
-	"github.com/deli/user-service/model"
+	"github.com/deli/user-service/models"
 )
 
-type GetUser func() *model.User
+type GetUser func() *models.User
 
 type Spec interface {
 	Save(f GetUser) (string, error)
-	GetById(uid string) *model.User
+	GetById(uid string) *models.User
 	ValidateUser(username, password string) (string, error)
 }
 
@@ -24,7 +24,7 @@ type Engine struct {
 	repo datastore.RepositorySpec
 }
 
-func (e *Engine) GetById(id string) *model.User {
+func (e *Engine) GetById(id string) *models.User {
 	u, err := e.repo.GetUserById(id)
 
 	if err != nil {

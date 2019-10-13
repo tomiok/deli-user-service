@@ -3,11 +3,11 @@ package datastore
 import (
 	"errors"
 	"github.com/deli/user-service/commons/logs"
-	"github.com/deli/user-service/model"
+	"github.com/deli/user-service/models"
 )
 
 // SaveUSer saves a user in the DB, and returns the ID for that user.
-func (u *UserRepository) SaveUser(user *model.User) (string, error) {
+func (u *UserRepository) SaveUser(user *models.User) (string, error) {
 
 	tx, err := u.DS.Begin()
 

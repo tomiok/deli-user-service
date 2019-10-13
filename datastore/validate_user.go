@@ -2,7 +2,7 @@ package datastore
 
 import (
 	"errors"
-	"github.com/deli/user-service/model"
+	"github.com/deli/user-service/models"
 	"github.com/deli/user-service/token"
 )
 
@@ -14,7 +14,7 @@ func (u *UserRepository) ValidateUserByPassword(username, password string) (stri
 		return "", err
 	}
 
-	var user model.User
+	var user models.User
 	err = tx.QueryRow("select u.id from user u where u.username = ? and u.password = ?", username, password).
 		Scan(&user.Uid)
 

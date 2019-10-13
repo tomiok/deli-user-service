@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"github.com/deli/user-service/commons/logs"
 	"github.com/deli/user-service/engine"
-	"github.com/deli/user-service/model"
+	"github.com/deli/user-service/models"
 	"io/ioutil"
 	"net/http"
 )
@@ -28,12 +28,12 @@ func createsAdminOrWriterHandler(e engine.Spec, w http.ResponseWriter, r *http.R
 	_ = json.NewEncoder(w).Encode(res)
 }
 
-func userFunction(r *http.Request, userType string) func() *model.User {
+func userFunction(r *http.Request, userType string) func() *models.User {
 
 	//TODO finish this error handling :(
-	return func() *model.User {
-		user := model.User{}
-		user.UserType = &model.UserType{Title: userType}
+	return func() *models.User {
+		user := models.User{}
+		user.UserType = &models.UserType{Title: userType}
 
 		body, _ := ioutil.ReadAll(r.Body)
 		_ = json.Unmarshal(body, &user)
