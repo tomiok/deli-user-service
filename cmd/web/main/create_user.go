@@ -28,7 +28,6 @@ func createsAdminOrWriterHandler(e engine.Spec, w http.ResponseWriter, r *http.R
 	_ = json.NewEncoder(w).Encode(res)
 }
 
-
 func userFunction(r *http.Request, userType string) func() *model.User {
 
 	//TODO finish this error handling :(
