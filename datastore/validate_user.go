@@ -22,7 +22,7 @@ func (u *UserRepository) ValidateUserByPassword(username, password string) (stri
 		return "", errors.New("query errors:: " + err.Error())
 	}
 
-	jsonToken, err := validateDBQuery(user.Uid)
+                                 	jsonToken, err := validateDBQuery(user.Uid)
 
 	return jsonToken, err
 }
