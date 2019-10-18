@@ -5,17 +5,17 @@ import (
 	"fmt"
 	"github.com/deli/user-service/commons"
 	"github.com/deli/user-service/commons/logs"
-	"github.com/deli/user-service/engine"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/docgen"
+	"github.com/go-chi/docgen/raml"
 	"github.com/go-chi/render"
 	"net/http"
 	"runtime"
 	"time"
 )
 
-func Routes(e engine.Spec, router *chi.Mux) {
+func Routes(router *chi.Mux) {
 
 	router.Use(render.SetContentType(render.ContentTypeJSON),
 		middleware.Logger,
@@ -35,18 +35,34 @@ func Routes(e engine.Spec, router *chi.Mux) {
 			createsAdminOrWriterHandler(e, w, r)
 		})
 
-		rt.Post("/login", func(w http.ResponseWriter, r *http.Request) {
-			w.Header().Add("Content-Type", "application/json")
-			validateUserHandler(e, w, r, encrypt)
-		})
+		rt.Post("/login", LoginHandler)
 	})
 
 	router.Get("/", healthCheck)
 
-	if true {
+	if false {
 		doc := docgen.JSONRoutesDoc(router)
 		fmt.Println(doc)
 	}
+
+	rl := A(router)
+	str := rl.String()
+	fmt.Println(str)
+}
+
+//LoginHandler.
+//Returns a JWT token.
+//     Consumes:
+//     - application/json
+//
+//     Produces:
+//     - application/json
+func LoginHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Content-Type", "application/json")
+
+	validateUserHandler(e, w, r, encrypt)
+	w.WriteHeader(200)
+	return
 }
 
 func healthCheck(w http.ResponseWriter, r *http.Request) {
@@ -84,4 +100,34 @@ func contentTypeM(next http.Handler) http.Handler {
 		w.Header().Add("Content-Type", "application/json")
 		next.ServeHTTP(w, r)
 	})
+}
+
+func A(r chi.Routes) *raml.RAML {
+
+	ramlDocs := &raml.RAML{
+		Title:     "Big Mux",
+		BaseUri:   "https://bigmux.example.com",
+		Version:   "v1.0",
+		MediaType: "application/json",
+	}
+
+	_ = chi.Walk(r, func(method string, route string, handler http.Handler, middlewares ...func(http.Handler) http.Handler) error {
+		funcInfo := docgen.GetFuncInfo(handler)
+		resource := &raml.Resource{
+			DisplayName: funcInfo.Func,
+			Description: funcInfo.Comment,
+			//Responses:       map[int]raml.Response{200: raml.Response{}},
+			//Body:            map[string]raml.Example{"" :raml.Example{Example:""}},
+			//Is:              nil,
+			//	Type:            "",
+			SecuredBy:       nil,
+			UriParameters:   nil,
+			QueryParameters: nil,
+			Resources:       nil,
+		}
+
+		return ramlDocs.Add(method, route, resource)
+	})
+
+	return ramlDocs
 }

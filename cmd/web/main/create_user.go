@@ -11,7 +11,6 @@ import (
 
 func createsAdminOrWriterHandler(e engine.Spec, w http.ResponseWriter, r *http.Request) {
 	userType := r.URL.Query()["type"][0]
-	w.Header().Set("Content-Type", "application/json")
 
 	defer r.Body.Close()
 

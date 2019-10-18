@@ -2,13 +2,12 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/deli/user-service/engine"
 	"net/http"
 )
 
 type encryptFn func(r *http.Request) (string, string)
 
-func validateUserHandler(e engine.Spec, w http.ResponseWriter, r *http.Request, fn encryptFn) {
+func validateUserHandler(w http.ResponseWriter, r *http.Request, fn encryptFn) {
 	username, pass := fn(r)
 	token, err := e.ValidateUser(username, pass)
 
