@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+const _randRange = 1001
+
 type ut UserType
 
 type UserType struct {
@@ -26,12 +28,12 @@ func Map(name string, lastName string, city string, country string, password str
 	case "admin", "writer":
 		return &User{
 			Uid:          commons.StringUUID(),
-			Name:         name,
-			LastName:     lastName,
+			Name:         strings.ToLower(name),
+			LastName:     strings.ToLower(lastName),
 			Username:     createUserName(name, lastName),
 			Password:     commons.EncryptPass(password),
-			City:         city,
-			Country:      country,
+			City:         strings.ToLower(city),
+			Country:      strings.ToLower(country),
 			EmailAddress: email,
 			CreatedAt:    time.Now(),
 			UserType:     &UserType{Title: ut.Title},
@@ -39,8 +41,8 @@ func Map(name string, lastName string, city string, country string, password str
 	case "user":
 		return &User{
 			Uid:       commons.StringUUID(),
-			Name:      name,
-			LastName:  lastName,
+			Name:      strings.ToLower(name),
+			LastName:  strings.ToLower(lastName),
 			Username:  username,
 			Password:  commons.EncryptPass(password),
 			City:      city,
@@ -58,9 +60,9 @@ func createUserName(name string, lastName string) string {
 	rand.Seed(time.Now().UnixNano())
 	var username string
 	if lastName == "" {
-		username = name + strconv.Itoa(rand.Intn(999))
+		username = name + strconv.Itoa(rand.Intn(_randRange))
 	} else {
-		username = string(name[0]) + lastName
+		username = string(name[0]) + lastName + strconv.Itoa(rand.Intn(_randRange))
 	}
 
 	return strings.ToLower(username)

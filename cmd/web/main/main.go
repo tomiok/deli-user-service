@@ -10,7 +10,6 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"runtime"
 )
 
 const (
@@ -22,6 +21,8 @@ const (
 var spec engine.Spec
 
 func main() {
+	logs.InitDefault()
+
 	dbPass := os.Getenv("DB_PASS")
 	dbUser := os.Getenv("DB_USER")
 	dbURL := os.Getenv("DB_URL")
@@ -34,8 +35,6 @@ func main() {
 	if port == "" {
 		port = fixed
 	}
-	logs.InitDefault()
-	logs.Infof("CPUs: %d", runtime.NumCPU())
 
 	mux := chi.NewRouter()
 	connection := createConnection(fmt.Sprintf(dbPath, dbUser, dbPass, dbURL))
@@ -43,7 +42,7 @@ func main() {
 	userRepository := &datastore.UserRepository{
 		DS: connection,
 	}
-	 spec = engine.New(userRepository)
+	spec = engine.New(userRepository)
 
 	Routes(mux)
 	go func() {

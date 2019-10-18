@@ -26,19 +26,12 @@ func Routes(router *chi.Mux) {
 
 	router.Route("/users", func(rt chi.Router) {
 
-		rt.Get("/{userId}", func(w http.ResponseWriter, r *http.Request) {
-			w.Header().Add("Content-Type", "application/json")
-			getUSerByIdHandler(w, r)
-		})
-		rt.Post("/aw", func(w http.ResponseWriter, r *http.Request) {
-			w.Header().Add("Content-Type", "application/json")
-			createsAdminOrWriterHandler(w, r)
-		})
-
+		rt.Get("/{userId}", getUSerByIdHandler)
+		rt.Post("/aw", createsAdminOrWriterHandler)
 		rt.Post("/login", LoginHandler)
 	})
 
-	router.Get("/", healthCheck)
+	router.Get("/health", healthCheck)
 
 	if false {
 		fmt.Println(generateRaml(router))
@@ -54,10 +47,7 @@ func Routes(router *chi.Mux) {
 //     - application/json
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "application/json")
-
 	validateUserHandler(w, r, encrypt)
-	w.WriteHeader(200)
-	return
 }
 
 func healthCheck(w http.ResponseWriter, r *http.Request) {
@@ -100,13 +90,14 @@ func contentTypeM(next http.Handler) http.Handler {
 func generateRaml(r chi.Routes) *raml.RAML {
 
 	ramlDocs := &raml.RAML{
-		Title:     "Big Mux",
-		BaseUri:   "https://bigmux.example.com",
+		Title:     "Deli User Service",
+		BaseUri:   "https://xxxxx.herokuapp.com/users",
 		Version:   "v1.0",
 		MediaType: "application/json",
 	}
 
 	_ = chi.Walk(r, func(method string, route string, handler http.Handler, middlewares ...func(http.Handler) http.Handler) error {
+
 		funcInfo := docgen.GetFuncInfo(handler)
 		resource := &raml.Resource{
 			DisplayName: funcInfo.Func,
