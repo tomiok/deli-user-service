@@ -28,11 +28,11 @@ func Routes(router *chi.Mux) {
 
 		rt.Get("/{userId}", func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Add("Content-Type", "application/json")
-			getUSerByIdHandler(e, w, r)
+			getUSerByIdHandler(w, r)
 		})
 		rt.Post("/aw", func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Add("Content-Type", "application/json")
-			createsAdminOrWriterHandler(e, w, r)
+			createsAdminOrWriterHandler(w, r)
 		})
 
 		rt.Post("/login", LoginHandler)
@@ -41,13 +41,8 @@ func Routes(router *chi.Mux) {
 	router.Get("/", healthCheck)
 
 	if false {
-		doc := docgen.JSONRoutesDoc(router)
-		fmt.Println(doc)
+		fmt.Println(generateRaml(router))
 	}
-
-	rl := A(router)
-	str := rl.String()
-	fmt.Println(str)
 }
 
 //LoginHandler.
@@ -60,7 +55,7 @@ func Routes(router *chi.Mux) {
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "application/json")
 
-	validateUserHandler(e, w, r, encrypt)
+	validateUserHandler(w, r, encrypt)
 	w.WriteHeader(200)
 	return
 }
@@ -102,7 +97,7 @@ func contentTypeM(next http.Handler) http.Handler {
 	})
 }
 
-func A(r chi.Routes) *raml.RAML {
+func generateRaml(r chi.Routes) *raml.RAML {
 
 	ramlDocs := &raml.RAML{
 		Title:     "Big Mux",

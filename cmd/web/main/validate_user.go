@@ -9,7 +9,7 @@ type encryptFn func(r *http.Request) (string, string)
 
 func validateUserHandler(w http.ResponseWriter, r *http.Request, fn encryptFn) {
 	username, pass := fn(r)
-	token, err := e.ValidateUser(username, pass)
+	token, err := spec.ValidateUser(username, pass)
 
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)

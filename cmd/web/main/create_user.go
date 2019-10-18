@@ -3,18 +3,17 @@ package main
 import (
 	"encoding/json"
 	"github.com/deli/user-service/commons/logs"
-	"github.com/deli/user-service/engine"
 	"github.com/deli/user-service/models"
 	"io/ioutil"
 	"net/http"
 )
 
-func createsAdminOrWriterHandler(e engine.Spec, w http.ResponseWriter, r *http.Request) {
+func createsAdminOrWriterHandler(w http.ResponseWriter, r *http.Request) {
 	userType := r.URL.Query()["type"][0]
 
 	defer r.Body.Close()
 
-	id, err := e.Save(userFunction(r, userType))
+	id, err := spec.Save(userFunction(r, userType))
 
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)

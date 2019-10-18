@@ -19,7 +19,7 @@ const (
 	secret = "isasecret"
 )
 
-var Engine engine.Spec
+var spec engine.Spec
 
 func main() {
 	dbPass := os.Getenv("DB_PASS")
@@ -43,7 +43,7 @@ func main() {
 	userRepository := &datastore.UserRepository{
 		DS: connection,
 	}
-	 Engine = engine.New(userRepository)
+	 spec = engine.New(userRepository)
 
 	Routes(mux)
 	go func() {
